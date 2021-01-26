@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Account {
+public class Accounts {
   @Id
   private Long id;
   @Column(name = "accountnumber", nullable = false, length = 45)
