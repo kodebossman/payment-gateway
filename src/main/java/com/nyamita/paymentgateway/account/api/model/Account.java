@@ -25,12 +25,10 @@ public class Account {
   private double accountBalance;
   @Column(name = "accountdescription", nullable = false)
   private String accountDescription;
-  @Column(name = "paymentdate", nullable = false)
-  private LocalDate paymentDate;
+  @Column(name = "updatedate", nullable = false)
+  private LocalDate updateDate;
   @Column(name = "accountholder", nullable = false)
   private  String accountHolder;
-  @Column(name = "accountname", nullable = false)
-  private String accountName;
   @Column(name = "destinationaccount", nullable = false)
   private String destinationAccount;
   @Column(name = "accountissuerbank", nullable = false, length = 45)
