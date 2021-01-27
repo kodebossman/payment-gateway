@@ -1,12 +1,14 @@
 package com.nyamita.paymentgateway.payment.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nyamita.paymentgateway.transaction.Transaction;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "payments", indexes = {@Index(name = "indx_payment", columnList = "id", unique = true)})
@@ -21,6 +23,10 @@ public class Payment {
   private Long id;
   @Column(name = "paymentid", nullable = false, length = 45)
   private String paymentId;
+
+  @OneToMany (fetch = FetchType.LAZY)
+  private List<Transaction> transaction;
+
   @Column(name = "paymentamount", nullable = false)
   private double paymentAmount;
   @Column(name = "paymentreference", nullable = false, length = 45)
