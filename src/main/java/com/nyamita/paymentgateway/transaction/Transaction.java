@@ -1,12 +1,16 @@
 package com.nyamita.paymentgateway.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nyamita.paymentgateway.payment.api.model.Payment;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "transactions", indexes = {@Index(name = "indx_transaction", columnList = "id", unique = true)})
 @Getter
@@ -16,10 +20,16 @@ import java.time.LocalDate;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Transaction {
+
     @Id
+    @GeneratedValue
     private long id;
     @Column(name = "amount", nullable = false)
     private Double amount;
+
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Payment.class)
+    private List<Payment> payment ;
+
     @Column(name = "charges", nullable = false)
     private Double charges;
     @Column(name = "description", nullable = false, length = 70)
