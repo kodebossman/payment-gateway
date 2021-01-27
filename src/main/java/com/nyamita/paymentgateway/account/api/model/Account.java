@@ -9,14 +9,14 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Account", indexes = {@Index(name = "indx_account", columnList = "id", unique = true)})
+@Table(name = "Accounts", indexes = {@Index(name = "indx_account", columnList = "id", unique = true)})
 @Getter
 @Setter
 @ToString
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Accounts {
+public class Account {
   @Id
   private Long id;
   @Column(name = "accountnumber", nullable = false, length = 45)
