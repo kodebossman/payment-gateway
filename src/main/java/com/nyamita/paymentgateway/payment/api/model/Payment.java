@@ -1,6 +1,7 @@
 package com.nyamita.paymentgateway.payment.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nyamita.paymentgateway.transaction.Transaction;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,6 +22,11 @@ public class Payment {
   private Long id;
   @Column(name = "paymentid", nullable = false, length = 45)
   private String paymentId;
+
+  @ManyToOne (fetch = FetchType.LAZY)
+  @JoinColumn(name="transation_id")
+  private Transaction transaction;
+
   @Column(name = "paymentamount", nullable = false)
   private double paymentAmount;
   @Column(name = "paymentreference", nullable = false, length = 45)
