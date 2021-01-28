@@ -1,6 +1,8 @@
 package com.nyamita.paymentgateway.payment.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nyamita.paymentgateway.account.Account;
+import com.nyamita.paymentgateway.common.BaseEntity;
 import com.nyamita.paymentgateway.transaction.Transaction;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,11 +20,14 @@ import java.util.List;
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Payment {
-  @Id
-  private Long id;
+public class Payment extends BaseEntity {
+
   @Column(name = "paymentid", nullable = false, length = 45)
   private String paymentId;
+
+  @ManyToOne (fetch = FetchType.LAZY)
+  @JoinColumn(name= "accounts_id", nullable = false)
+  private Account account;
 
   @OneToMany (fetch = FetchType.LAZY)
   private List<Transaction> transaction;

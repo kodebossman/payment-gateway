@@ -1,12 +1,12 @@
 package com.nyamita.paymentgateway.common;
 
-import lombok.ToString;
+import  lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 @ToString
 @MappedSuperclass
-
+@Inheritance(strategy= InheritanceType.JOINED)
 public abstract class BaseEntity
   implements Serializable {
 
@@ -15,7 +15,7 @@ public abstract class BaseEntity
   private Boolean deleted = false;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
   public Long getId() {
     return id;
