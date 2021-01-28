@@ -27,8 +27,9 @@ public class Transaction {
     @Column(name = "amount", nullable = false)
     private Double amount;
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Payment.class)
-    private List<Payment> payment ;
+     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Payment.class)
+    @JoinColumn(name="payment_id")
+    private Payment paymentId;
 
     @Column(name = "charges", nullable = false)
     private Double charges;
