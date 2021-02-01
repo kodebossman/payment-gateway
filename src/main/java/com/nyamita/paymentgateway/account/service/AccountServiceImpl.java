@@ -24,7 +24,6 @@ public class AccountServiceImpl implements AccountService {
   public Account register(Account account) {
 
     log.info("Register an account :{}"+account);
-
     return accountRepository.save(account);
   }
 
