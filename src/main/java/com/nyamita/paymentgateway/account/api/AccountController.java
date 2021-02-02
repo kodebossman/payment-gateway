@@ -1,6 +1,7 @@
-package com.nyamita.paymentgateway.account.service;
+package com.nyamita.paymentgateway.account.api;
 
 import com.nyamita.paymentgateway.account.Account;
+import com.nyamita.paymentgateway.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
