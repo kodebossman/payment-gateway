@@ -20,12 +20,6 @@ import java.time.LocalDate;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Account extends BaseEntity {
- /* @Id
-  @GeneratedValue
-  private long id;
-*/
- // @JoinColumn(name="payment_id")
-
 
   @Column(name = "accountnumber", nullable = false, length = 45)
   private String accountNumber;
