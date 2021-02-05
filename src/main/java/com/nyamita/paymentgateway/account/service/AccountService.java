@@ -10,5 +10,7 @@ public interface AccountService  {
   Account register(Account account);
   Optional<Account> findByAccountNumber(String accountNumber);
   List<Account> findAllAccount();
+  Account update ( Account acccout);
+  void delete(Long Id);
 
 }
