@@ -38,7 +38,8 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public List<Account> findAllAccount() {
 
-    log.debug("Getting all farmer {}:");
+    log.debug("Getting all account {}:");
+
     return accountRepository.findAll();
   }
 
