@@ -46,29 +46,27 @@ public class AccountServiceImpl implements AccountService {
   public Account update(Account acccount) {
 
     log.info("Updating an account with Id:{}" + acccount);
-    Optional<Account> account = accountRepository.findById(acccount.getId());
-    if (account.isPresent()) {
-      Account acc = account.get();
-      return accountRepository.save(acc);
-    } else {
-
-      throw new IllegalArgumentException("No account with the provide ID: " + acccount.getId());
-    }
+   Account acc = checkAccountAvailability(acccount.getId());
+   return accountRepository.save(acc);
 
   }
 
   @Override
   public void delete(Long Id) {
     log.info("Deleting an account with Id:{}" + Id);
-    Optional<Account> account = accountRepository.findById(Id);
-    if (account.isPresent()) {
-      Account account1 = account.get();
-      account1.setDeleted(true);
-      accountRepository.save(account1);
-    } else {
-
-      throw new IllegalArgumentException("The give ID is not found in the database ");
-    }
+    Account acc = checkAccountAvailability(Id);
+    acc.setDeleted(true);
+    accountRepository.save(acc);
   }
+
+ public Account checkAccountAvailability(Long Id){
+
+   Optional<Account> account = accountRepository.findById(Id);
+   if (account.isPresent()) {
+     return account.get();
+   } else {
+     throw new IllegalArgumentException("The give ID is not found in the database ");
+   }
+ }
 
 }
