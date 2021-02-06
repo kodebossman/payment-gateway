@@ -19,14 +19,14 @@ public class AccountServiceImpl implements AccountService {
   private final AccountRepository accountRepository;
 
   //constructor injection
-  public AccountServiceImpl(AccountRepository accountRepository){
-    this.accountRepository= accountRepository;
+  public AccountServiceImpl(AccountRepository accountRepository) {
+    this.accountRepository = accountRepository;
   }
 
   @Override
   public Account register(Account account) {
 
-    log.info("Register an account :{}"+account);
+    log.info("Register an account :{}" + account);
     return accountRepository.save(account);
   }
 
@@ -38,9 +38,35 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public List<Account> findAllAccount() {
 
-    log.debug("Getting all farmer {}:");
+    log.debug("Getting all Accounts {}:");
     return accountRepository.findAll();
   }
 
+  @Override
+  public Account update(Account acccount) {
+
+    log.info("Updating an account with Id:{}" + acccount);
+   Account acc = checkAccountAvailability(acccount.getId());
+   return accountRepository.save(acc);
+
+  }
+
+  @Override
+  public void delete(Long Id) {
+    log.info("Deleting an account with Id:{}" + Id);
+    Account acc = checkAccountAvailability(Id);
+    acc.setDeleted(true);
+    accountRepository.save(acc);
+  }
+
+ public Account checkAccountAvailability(Long Id){
+
+   Optional<Account> account = accountRepository.findById(Id);
+   if (account.isPresent()) {
+     return account.get();
+   } else {
+     throw new IllegalArgumentException("The give ID is not found in the database ");
+   }
+ }
 
 }

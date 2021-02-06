@@ -1,6 +1,7 @@
 package com.nyamita.paymentgateway.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nyamita.paymentgateway.common.BaseEntity;
 import com.nyamita.paymentgateway.payment.api.model.Payment;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +20,9 @@ import java.util.List;
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Transaction {
+public class Transaction extends BaseEntity {
 
-    @Id
-    @GeneratedValue
-    private long id;
+
     @Column(name = "amount", nullable = false)
     private Double amount;
 
