@@ -53,6 +53,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public void delete(Long Id) {
+    
     log.info("Deleting an account with Id:{}" + Id);
     Account acc = checkAccountAvailability(Id);
     acc.setDeleted(true);
