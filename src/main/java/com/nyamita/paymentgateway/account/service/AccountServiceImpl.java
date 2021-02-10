@@ -3,7 +3,6 @@ package com.nyamita.paymentgateway.account.service;
 import com.nyamita.paymentgateway.account.Account;
 import com.nyamita.paymentgateway.account.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +53,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public void delete(Long Id) {
+    
     log.info("Deleting an account with Id:{}" + Id);
     Account acc = checkAccountAvailability(Id);
     acc.setDeleted(true);
@@ -66,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
    if (account.isPresent()) {
      return account.get();
    } else {
-     throw new IllegalArgumentException(HttpStatus.NOT_FOUND +" id not found: {}" + Id);
+     throw new IllegalArgumentException("The give ID is not found in the database : "+ Id );
    }
  }
 
