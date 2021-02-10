@@ -10,7 +10,7 @@ public interface AccountService  {
   Account register(Account account);
   Optional<Account> findByAccountNumber(String accountNumber);
   List<Account> findAllAccount();
-  Account update ( Account acccout);
+  Account update ( Account account);
   void delete(Long Id);
 
 }

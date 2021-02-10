@@ -7,12 +7,11 @@ import com.nyamita.paymentgateway.payment.api.model.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Slf4j
@@ -26,7 +25,7 @@ public class PaymentController {
     this.paymentService = paymentService;
   }
 
-  @PostMapping(value="/createPayment")
+  @PostMapping(value="/create")
 
   public ResponseEntity<Payment> register(@Valid @RequestBody Payment payment ){
 
@@ -35,7 +34,29 @@ public class PaymentController {
     return new ResponseEntity<>(py,HttpStatus.CREATED);
   }
 
+  @GetMapping("/search/{paymentid}")
+  public ResponseEntity<Optional<Payment>> getByPaymentId(@PathVariable(name="paymentid")  String paymentId) {
 
+    log.info("Payment is{}: " + paymentId);
+    Optional<Payment> payment  = paymentService.findByPaymentId(paymentId);
+    return new ResponseEntity<>(payment,HttpStatus.OK);
+
+  }
+
+  @PutMapping("/update/{id}")
+  public ResponseEntity<Payment> update(@RequestBody Payment payment, @PathVariable Long id) {
+
+      log.info("Updating an account with Id:{}" + payment);
+      paymentService.update(payment);
+     return new ResponseEntity<>(payment, HttpStatus.OK);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public void delete(@PathVariable Long id) {
+
+    log.info("Deleting a payment with Id:{}" + id);
+    paymentService.delete(id);
+  }
 
 
 }

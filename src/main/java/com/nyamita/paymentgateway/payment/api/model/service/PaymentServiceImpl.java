@@ -34,8 +34,8 @@ public class PaymentServiceImpl implements PaymentService {
   }
 
     @Override
-    public Optional<Payment> findByPaymentReference(String paymentReference) {
-        return paymentRepository.findByPaymentReference(paymentReference);
+    public Optional<Payment> findByPaymentId(String paymentId) {
+        return paymentRepository.findByPaymentId(paymentId);
     }
 
     @Override
@@ -44,5 +44,32 @@ public class PaymentServiceImpl implements PaymentService {
         log.debug("Getting all payments {}:");
         return paymentRepository.findAll();
 
+}
+
+  @Override
+  public Payment update(Payment payment) {
+
+    log.info("Updating an account with Id:{}" + payment);
+    Payment pay = checkPaymentAvailability(payment.getId());
+    return paymentRepository.save(pay);
+
+  }
+
+  @Override
+  public void delete(Long Id) {
+    log.info("Deleting a payment with Id:{}" + Id);
+    Payment pay = checkPaymentAvailability(Id);
+    pay.setDeleted(true);
+    paymentRepository.save(pay);
+  }
+
+  public Payment checkPaymentAvailability(Long Id){
+
+    Optional<Payment> payment = paymentRepository.findById(Id);
+    if (payment.isPresent()) {
+      return payment.get();
+    } else {
+      throw new IllegalArgumentException("The give ID is not found in the database ");
+    }
 }
 }

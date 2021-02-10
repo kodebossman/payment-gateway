@@ -9,7 +9,10 @@ import java.util.Optional;
 public interface PaymentService {
 
   Payment register(Payment payment);
-  Optional<Payment> findByPaymentReference(String paymentReference);
+  Optional<Payment> findByPaymentId(String paymentId);
   List<Payment> findAllPayment();
+  Payment update ( Payment payment);
+  void delete(Long Id);
+
 
 }
