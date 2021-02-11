@@ -1,11 +1,11 @@
 package com.nyamita.paymentgateway.client;
 
+import com.nyamita.paymentgateway.common.BaseEntity;
+
 import javax.persistence.Id;
 
-public class Client {
+public class Client{
 
-  @Id
-  private Long id;
   private String name;
   private String surmane;
   private String address;
