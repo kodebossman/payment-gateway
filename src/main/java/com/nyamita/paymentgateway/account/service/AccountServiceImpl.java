@@ -66,7 +66,8 @@ public class AccountServiceImpl implements AccountService {
    Optional<Account> account = accountRepository.findById(Id);
    if (account.isPresent())  {
      return account.get();
-   } else {throw new RecordNotFoundException("the given id is not in the database: " + Id);
+   } else {
+       throw new RecordNotFoundException("the given id is not in the database: " + Id);
 
    }
  }
