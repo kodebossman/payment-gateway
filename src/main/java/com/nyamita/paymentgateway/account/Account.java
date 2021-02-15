@@ -30,6 +30,13 @@ public class Account extends BaseEntity {
   @Column(name = "accountissuerbank", nullable = false, length = 45)
   private String accountIssuerBank;
 
+  @Column(name = "accountType", nullable = false)
+  private AccountType accountType;
+
+  private String customerAddress;
+  private String occupation;
+  private String mobileNumber;
+
   //create
 
 }
