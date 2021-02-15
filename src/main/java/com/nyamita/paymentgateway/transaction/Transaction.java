@@ -38,5 +38,4 @@ public class Transaction extends BaseEntity {
   @Column(name = "accountDetailId", nullable = false)
   private int accountDetailsId;
 
-
 }

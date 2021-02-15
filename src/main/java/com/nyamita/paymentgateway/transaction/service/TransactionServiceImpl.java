@@ -30,7 +30,8 @@ public class TransactionServiceImpl implements TransactionService {
 
 
     public Optional<Transaction> findByAccountNumber(String accountNumber) {
-        return transactionRepository.findByAccountNumber(accountNumber);
+      //  return transactionRepository.findByAccountNumber(accountNumber);
+      return null;
     }
 
     public List<Transaction> findAllTransaction() {

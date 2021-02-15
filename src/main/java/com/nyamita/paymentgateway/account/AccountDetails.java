@@ -19,10 +19,13 @@ import java.time.LocalDateTime;
 
 public class AccountDetails extends BaseEntity {
 
+  @Column(name = "accountnumber", nullable = false)
   private String accountNumber;
+  @Column(name = "currentaccountbalance", nullable = false)
   private double currentAccountBalance;
+  @Column(name = "previousbalance", nullable = false )
   private double previousBalance;
+  @Column(name = "datetime", nullable = false )
   private LocalDateTime dateTime;
-
 
 }
