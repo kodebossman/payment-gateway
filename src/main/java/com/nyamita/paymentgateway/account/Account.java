@@ -23,17 +23,20 @@ public class Account extends BaseEntity {
 
   @Column(name = "accountnumber", nullable = false, length = 45)
   private String accountNumber;
-  @Column(name = "accountbalance", nullable = false)
-  private double accountBalance;
   @Column(name = "accountdescription", nullable = false)
   private String accountDescription;
-  @Column(name = "updatedate", nullable = false)
-  private LocalDate updateDate;
   @Column(name = "accountholder", nullable = false)
   private  String accountHolder;
-  @Column(name = "destinationaccount", nullable = false)
-  private String destinationAccount;
   @Column(name = "accountissuerbank", nullable = false, length = 45)
   private String accountIssuerBank;
+
+  @Column(name = "accountType", nullable = false)
+  private AccountType accountType;
+
+  private String customerAddress;
+  private String occupation;
+  private String mobileNumber;
+
+  //create
 
 }

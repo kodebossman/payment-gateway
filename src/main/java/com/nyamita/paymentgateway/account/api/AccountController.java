@@ -3,14 +3,12 @@ package com.nyamita.paymentgateway.account.api;
 import com.nyamita.paymentgateway.account.Account;
 import com.nyamita.paymentgateway.account.service.AccountService;
 import com.nyamita.paymentgateway.common.exceptions.RecordNotFoundException;
-import com.nyamita.paymentgateway.payment.api.model.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -34,11 +32,11 @@ public class AccountController {
   }
 
   @GetMapping("/search/{accountnumber}")
-  public ResponseEntity<Optional<Account>> getByAccountNumber(@PathVariable(name="accountnumber")  String accountNumber) {
+  public ResponseEntity<Optional<Account>> getByAccountNumber(@PathVariable(name = "accountnumber") String accountNumber) {
 
     log.info("Account is{}: " + accountNumber);
-    Optional<Account> account  = accountService.findByAccountNumber(accountNumber);
-    return new ResponseEntity<>(account,HttpStatus.OK);
+    Optional<Account> account = accountService.findByAccountNumber(accountNumber);
+    return new ResponseEntity<>(account, HttpStatus.OK);
 
   }
 
@@ -46,11 +44,9 @@ public class AccountController {
   @PutMapping("/update/{id}")
   public ResponseEntity<Account> update(@RequestBody Account account, @PathVariable Long id) throws RecordNotFoundException {
 
-
-      log.info("Updating an account with Id:{}" + account);
-
-      accountService.update(account);
-   return new ResponseEntity<>(account,HttpStatus.OK);
+    log.info("Updating an account with Id:{}" + account);
+    accountService.update(account);
+    return new ResponseEntity<>(account, HttpStatus.OK);
   }
 
   @DeleteMapping("/delete/{id}")
@@ -60,5 +56,5 @@ public class AccountController {
     accountService.delete(id);
   }
 
-  
+
 }

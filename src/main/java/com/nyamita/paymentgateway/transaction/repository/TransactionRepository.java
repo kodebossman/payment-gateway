@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    Optional<Transaction> findByAccountNumber(String accountNumber);
+   // Optional<Transaction> findByAccountNumber(String accountNumber);
 }
