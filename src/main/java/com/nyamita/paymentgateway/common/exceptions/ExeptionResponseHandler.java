@@ -18,8 +18,8 @@ public class ExeptionResponseHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(RecordNotFoundException.class)
-    protected ResponseEntity<Object> exception(RecordNotFoundException exception) {
-       // String errorMsg = "Your request could not be found in the database";
+
+        protected ResponseEntity<Object> exception(RecordNotFoundException exception) {
         ErrorMessage errorMsg = new ErrorMessage(exception.getMessage(), 404, "Record not available");
         return new ResponseEntity<>(errorMsg, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
     }

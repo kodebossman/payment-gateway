@@ -1,6 +1,7 @@
 package com.nyamita.paymentgateway.payment.api.model.service;
 
 import com.nyamita.paymentgateway.account.Account;
+import com.nyamita.paymentgateway.common.exceptions.RecordNotFoundException;
 import com.nyamita.paymentgateway.payment.api.model.Payment;
 
 import java.util.List;
@@ -11,8 +12,8 @@ public interface PaymentService {
   Payment register(Payment payment);
   Optional<Payment> findByPaymentId(String paymentId);
   List<Payment> findAllPayment();
-  Payment update ( Payment payment);
-  void delete(Long Id);
+  Payment update ( Payment payment) throws RecordNotFoundException;
+  void delete(Long Id) throws RecordNotFoundException;
 
 
 }

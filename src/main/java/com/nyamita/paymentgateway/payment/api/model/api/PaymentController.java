@@ -2,6 +2,7 @@ package com.nyamita.paymentgateway.payment.api.model.api;
 
 import com.nyamita.paymentgateway.account.Account;
 import com.nyamita.paymentgateway.account.service.AccountService;
+import com.nyamita.paymentgateway.common.exceptions.RecordNotFoundException;
 import com.nyamita.paymentgateway.payment.api.model.Payment;
 import com.nyamita.paymentgateway.payment.api.model.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ public class PaymentController {
   }
 
   @PutMapping("/update/{id}")
-  public ResponseEntity<Payment> update(@RequestBody Payment payment, @PathVariable Long id) {
+  public ResponseEntity<Payment> update(@RequestBody Payment payment, @PathVariable Long id) throws RecordNotFoundException {
 
       log.info("Updating an account with Id:{}" + payment);
       paymentService.update(payment);
@@ -52,7 +53,7 @@ public class PaymentController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable Long id) throws RecordNotFoundException {
 
     log.info("Deleting a payment with Id:{}" + id);
     paymentService.delete(id);

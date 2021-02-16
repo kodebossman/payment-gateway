@@ -3,6 +3,7 @@ package com.nyamita.paymentgateway.payment.api.model.service;
 import com.nyamita.paymentgateway.account.Account;
 import com.nyamita.paymentgateway.account.repository.AccountRepository;
 import com.nyamita.paymentgateway.account.service.AccountService;
+import com.nyamita.paymentgateway.common.exceptions.RecordNotFoundException;
 import com.nyamita.paymentgateway.payment.api.model.Payment;
 import com.nyamita.paymentgateway.payment.api.model.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
 }
 
   @Override
-  public Payment update(Payment payment) {
+  public Payment update(Payment payment) throws RecordNotFoundException {
 
     log.info("Updating an account with Id:{}" + payment);
     Payment pay = checkPaymentAvailability(payment.getId());
@@ -56,20 +57,20 @@ public class PaymentServiceImpl implements PaymentService {
   }
 
   @Override
-  public void delete(Long Id) {
+  public void delete(Long Id) throws RecordNotFoundException {
     log.info("Deleting a payment with Id:{}" + Id);
     Payment pay = checkPaymentAvailability(Id);
     pay.setDeleted(true);
     paymentRepository.save(pay);
   }
 
-  public Payment checkPaymentAvailability(Long Id){
+  public Payment checkPaymentAvailability(Long Id) throws RecordNotFoundException {
 
     Optional<Payment> payment = paymentRepository.findById(Id);
     if (payment.isPresent()) {
       return payment.get();
     } else {
-      throw new IllegalArgumentException("The give ID is not found in the database ");
+      throw new RecordNotFoundException("The give ID is not found in the database: " + Id);
     }
 }
 }
