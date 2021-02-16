@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,27 +47,64 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
       double transactionCharges = transAmount* 0.01;
       //TODO - send transaction charges to gateway account
 
+      //check that the ammount+ charges in transaction is not greater than currentbalance
       double totalAmount = transAmount + transactionCharges;
 
-      double currentBalance = accountDetailsRepository.
+      List<AccountDetails> accountDetails = accountDetailsRepository.findByAccountNumberOrderByIdDateTimeDesc(createTransactionDTO.getAccountNumber());
+      Optional<AccountDetails> currentAccDetails = accountDetails.stream().findFirst();
+
+      if( currentAccDetails.isPresent()) {
+
+        double currentAccBalance = accountDetails.get(0).getCurrentAccountBalance();
+        if (totalAmount > currentAccBalance && !createTransactionDTO.getTransaction().getTransactionType().equals("Deposit")) {
+
+          // if transaction
+          throw new IllegalArgumentException("Amount not good enough please reload your account");
+        }
+
+        //check the destination account exist??
+
+        //TODO- (call bank name to verify the account)
+
+        AccountDetails accountDetail = new AccountDetails();
+        accountDetail.setAccountNumber(createTransactionDTO.getAccountNumber());
+        //check transactionType
+        double currentAccBal = currentAccBalance - totalAmount;
+        accountDetail.setCurrentAccountBalance(currentAccBal);
+        accountDetail.setPreviousBalance(currentAccBalance);
+        accountDetail.setDateTime(LocalDateTime.now());
+        AccountDetails accDetail =  accountDetailsRepository.save(accountDetail);
+
+        //save transaction
+
+        Transaction transaction = new Transaction();
+        transaction.setAccountDetailsId(accDetail.getId());
+        transaction.setAmount(createTransactionDTO.getTransaction().getAmount());
+        transaction.setDestinationAccNumber(createTransactionDTO.getTransaction().getDestinationAccNumber());
+        transaction.setDestinationBank(createTransactionDTO.getTransaction().getDestinationBank());
+        transaction.setReference(createTransactionDTO.getTransaction().getReference());
+        transaction.setTransactionCharges(transactionCharges);
+        transaction.setTransactionType(createTransactionDTO.getTransaction().getTransactionType());
+
+        Transaction trans = transactionRepository.save(transaction);
+
+        // created Transaction DTO
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setAccountNumber(accDetail.getAccountNumber());
+        transactionDTO.setCurrentAccountBalance(accDetail.getCurrentAccountBalance());
+        transactionDTO.setDateTime(accDetail.getDateTime());
+        transactionDTO.setPreviousBalance(accDetail.getPreviousBalance());
+        transactionDTO.setTransaction(trans);
+
+        return transactionDTO;
+      }
 
 
-
-
-
-
+    }else {
+      throw new IllegalArgumentException(" The account does not exit");
     }
 
-    //check that this account exists
-
-    //check that the ammount+ charges in transaction is not greater than currentbalance
-    //check the destination account exist??
-    //calculate the new current balance;
-    //save the account details
-    //save transaction
-    // return transaction dto
-
-    return null;
+    return new TransactionDTO();
   }
 
   public boolean checkAccount(String accountNumber) {

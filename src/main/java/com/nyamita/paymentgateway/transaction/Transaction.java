@@ -36,6 +36,6 @@ public class Transaction extends BaseEntity {
   @Column(name = "destinationBank", nullable = false, length = 50)
   private String destinationBank;
   @Column(name = "accountDetailId", nullable = false)
-  private int accountDetailsId;
+  private Long accountDetailsId;
 
 }
