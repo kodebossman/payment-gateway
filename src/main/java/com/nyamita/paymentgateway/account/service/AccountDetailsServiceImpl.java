@@ -6,6 +6,8 @@ import com.nyamita.paymentgateway.account.dto.CreateTransactionDTO;
 import com.nyamita.paymentgateway.account.dto.TransactionDTO;
 import com.nyamita.paymentgateway.account.repository.AccountDetailsRepository;
 import com.nyamita.paymentgateway.account.repository.AccountRepository;
+import com.nyamita.paymentgateway.common.exceptions.AccountNotFoundException;
+import com.nyamita.paymentgateway.common.exceptions.LowBalanceException;
 import com.nyamita.paymentgateway.common.exceptions.RecordNotFoundException;
 import com.nyamita.paymentgateway.transaction.Transaction;
 import com.nyamita.paymentgateway.transaction.repository.TransactionRepository;
@@ -37,7 +39,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
   }
 
   @Override
-  public TransactionDTO createTransaction(CreateTransactionDTO createTransactionDTO) {
+  public TransactionDTO createTransaction(CreateTransactionDTO createTransactionDTO) throws AccountNotFoundException, LowBalanceException {
 
     log.info("CreateTransactionDTO {}" + createTransactionDTO);
 
@@ -59,7 +61,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
         if (totalAmount > currentAccBalance && !createTransactionDTO.getTransaction().getTransactionType().equals("Deposit")) {
 
           // if transaction
-          throw new IllegalArgumentException("Amount not good enough please reload your account");
+          throw new LowBalanceException("Amount not good enough please reload your account");
         }
 
         //check the destination account exist??
@@ -101,7 +103,7 @@ public class AccountDetailsServiceImpl implements AccountDetailsService {
 
 
     }else {
-      throw new IllegalArgumentException(" The account does not exit");
+      throw new AccountNotFoundException(" The account does not exit");
     }
 
     return new TransactionDTO();
